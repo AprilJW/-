@@ -1,0 +1,82 @@
+Manage.py 是一个命令行工具
+内层的目录  项目真正的python包
+urls.py 项目的url  声明
+wsgi.py 项目与wsgi兼容的web服务器入口
+python manage.py startalp name
+又一个数据表就有一个模型类与之对应
+from Django.db import models
+Class BookInfo(models.Model):
+	btitle = models.CharField(max_length=20)
+	bpub_date = models.DateTimeField()
+	def __str__(self):
+		return "%d" % self.pk
+
+Class HeroInfo(models.Model):
+	hname = models.CharField(max_length=20)
+	hgenter = models.BooleanField()
+	content = models.CharField(max_length=100)
+	hBook = models.ForeignKey('BookInfo')
+	def __str__(self):
+		return "%d" % self.pk
+
+Settings.py installed_apps booktest 项目名字
+ 
+根据模型类生成 sql语句 
+Python manage.py make migrations
+Migrations目录下有生成的迁移文件
+python manage.py migrate 生成数据表
+python  manage.py shell
+
+From bootless.models import BookInfo HerInfo
+From Django.utils import timezone
+From date time import *
+BookInfo.objects.all()
+b = BoolInfo()
+b.title = 'shediao'
+b.bpub_date = datetime(year=1991,month=1,day=10)
+b.save()
+
+b = BookInfo.objects.get(pk=1)
+b.id
+b.btitle
+b.btitle = u 'tianlong'
+b.save()
+B.delete()
+
+H = HeroInfo()
+H.title = u'guojing'
+H.hgenter = True
+H.hcontent=u'tianlong'
+H.hbook = b
+H.save()
+B.heroinfo_set.all()
+b.heroinfo_set.create(htitle='huangrong',
+hgender=False, hcontent=u'dagou')
+
+Python manage.py rumserver ip:port
+Python manage.py rumserver 8000
+Python manage.py.runsrver 8080
+127.0.0.1:8000
+增删文件需要重启浏览器
+创建一个管理员用户
+Python manage.py createsuperuser
+127.0.0.1:8000/admin
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+Admin  注册booktest模型
+from Django.contrib import admin
+From models.import BookInfo
+Admin.site.register(BookInfo)
+TEMPLATES DIRS:[os.path.join(BASE_DIR,' templates')]
+Render简化视图调用模版
+From Django.shortcuts import render
+From models import BookInfo
+Def index(requst):
+Booklist = BookInfo.object.all()
+Return render(request, 'booklets/index.html', {
+'booklist':booklist})
+Def detail(request, id):
+Book = BookInfo.objects.get(pk=id)
+Return render(request, 'booktest/detail.html', {'book': book})
+ 
+
