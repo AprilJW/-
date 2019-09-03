@@ -25,13 +25,13 @@
 # 二、面试中可能会遇到的题目
 ## 1.动态语言的内存管理：
     什么是垃圾回收GC？面向对象编程在内存管理方面的优势和劣势？
-    在程序运行时某一些对象的引用计数（sys.getrefcount(x)）可能为0，这些对象会被打上标记，说明为空，这些对象，所占用的碎片化内存，会被整理成连续的内存空间以便后续使用，这个过程叫做垃圾回收。但是垃圾回收时内存不能使用，所以需要在空闲时间整理内存，也不需要频繁整理，看实际需要。
+    在程序运行时某一些对象的引用计数（sys.getrefcount(x)）可能为0，这些对象会被打上标记，说明为空，这些对象,所占用的碎片化内存，会被整理成连续的内存空间以便后续使用，这个过程叫做垃圾回收。但是垃圾回收时内存不能使用，所以需要在空闲时间整理内存，也不需要频繁整理，看实际需要。
     引用计数增加的方式：
-        对象赋值给其他变量例如：x = [1,2] y = x  列表的引用计数加
-        函数调用 foo(x)  调用时增加一次，调用完成，恢复原来的次数
+        对象赋值给其他变量例如：x = [1,2] y = x  列表的引用计数加1
+        函数调用 foo(x)  调用时某些变量引用计数会增加，调用完成，恢复原来的次数
     引用计数减少的方式：
         函数运行结束时，局部变量会被自动消除，引用计数减少
-        变量赋值给其他对象 x = 3 x = 4, 3的引用计数少一次
+        变量指向给其他对象 x = 3 x = 4, 3的引用计数少一次
     另外， 字面常量的引用计数不容易判断
 ## 2.元编程
     可能是会拉开差距的面试题
@@ -64,7 +64,7 @@
 
 + 个各结构的运算速度：cup >> 内存 >> IO设备
 
-  ![]()
+  ![](/Users/jw/Projects/python23/magedu/冯诺伊曼体系.png)
 
 ## 2.解释性语言和汇编语言
 + 解释性语言工作流程：源代码被解释器翻译成Bytecode,然后在虚拟机上运行（如pvm）,转换成机器语言
@@ -87,7 +87,7 @@
 + 其他进制转10进制 对应位置累乘
 + 2进制以1结尾在10进制中都是奇数
 + 2进制与16进制相互转换容易
-+ 8bits(位) = 1byte（字节）
++ 8bits(位) = 1byte（字节）= 1B    下载速度？？？？？？？？
 + 网络一般是bits，u盘一般是1byte
 
 + 需要记住的16进制到10进制的几个数：
@@ -101,9 +101,9 @@
             
     1.  111 二进制
         F 十六进制      
-        15 十进制
+        9 十进制
 
-    2.  0xFF 十六进制 表示256个无符号位
+    2.  0xFF 十六进制 表示256个无符号位0～255  表示多少有符号位？？？？？？
         1111 1111 二进制
         2的8次幂减1 255
 
@@ -123,7 +123,7 @@
     ~  位非
     ^  位异或
 + 例子：
-    1. 12的源码,补码,反码都为 0000 1100在按位取反的过程中计算机自动求了补码，～12的按位取反 为1111 0011，计算机认为这是个负数，所以又去了补码（负数的补码为，首位不变，其他位数取反码，并加1），即为1000 1100+1=1000 1101=-13
+    1. 正数的源码反码和补码都相同，例如：12的源码,补码,反码都为 0000 1100在按位取反的过程中计算机自动求了补码，～12的**按位取反**（每一位都取反，包括首位） 为1111 0011，计算机认为这是个负数，所以又取了补码（负数的补码为，首位不变，其他位数取反码，并加1），即为1000 1100+1=1000 1101=-13。  
 
     2. -1 我们看到的格式为-0b1和1000 0001, 在计算机中的存在格式为1111 1110 + 1=1111 1111 =0xFF。所以0xFF 不仅表示正的255还表示-1 
 
@@ -134,6 +134,14 @@
     5.异或
     10^9 = 0000 1010 ^ 0000 1001 = 0000 0011=3
     10^-9 = 0000 1010 ^ (1000 1001自己看到的）1111 0110+1 =1111 1101 取补码 1000 0011=-3
+    
+    例子：?????????????????????????
+    
+    ```python 
+    
+    ```
+    
+    
 
 ## 3.逻辑运算
     逻辑元算
@@ -141,24 +149,24 @@
     or
     not 
 
-+ Or短路是指返回表达式第一个位置的值 4 or 5 or 6=4+5+6 返回6
-+ and短路是指 第一个位置为0 0 and 5 and 6 =0*5*6 返回0
++ Or短路是指返回表达式第一个位置的为非零    1 or 0 or 6= 1+0+6 返回1
++ and短路是指 第一个位置为0    0 and 5 and 6 = 0\*5\*6 返回0
 + 与false等价的 4个空容器，空串，None，0
 + 运算符的优先顺序: 单目运算符> 双目算数运算符 >比较运算符 >逻辑运算符
 + 例子：
-    1. (1 and 0) or (5 and 6) 返回6
+    1. (1 and 0) or (5 and 6) 返回6  ??????????????????????????
     2. 0 or 'abc' 返回‘abc’
 
 ## 4.分支及循环
 + 分支： if前面的条件被跳过，后面隐含前面条件
-+ If 和elif加条件和冒号 else后面直接加冒号
++ If 和elif加条件与冒号 ，else后面直接加冒号
 + 只有一个条件可以写成 if 3<2:print('111')
 
-+ range(a)前包后不包，是惰性对象，range?查看帮助 ，一般作为计数器，当作为计数器时a大于
++ range(a)前包后不包，是惰性对象，range?查看帮助 ，一般作为计数器，当作为计数器时a大于0
 + for i in range(10, -1, -2)打印10，8，6，4，2，0
 + continue  跳过当前一次continue后面的循环，进入到下一次循环，如果当前循环是最后一次，则跳出循环
 
-+ Break终止当前for循环或者其他循环，continue终止本次循环进入下一次循环
++ break终止当前for循环或者其他循环，continue终止本次循环进入下一次循环
 + 例子：
       
     1.  ``` python
@@ -166,45 +174,85 @@
             print(i)
             if  i > 2:
                 break
-            else:
-            print('end')
+        else:
+        		print('end')
         ```
-    + 当如果循环正常执行，并且遇到了break,就认为循环不正常，不执行else(两个条件)，否则都执行else
+    + 当如果已经进入循环，并且遇到了break,就认为循环不正常，不执行else(两个条件)，否则都执行else
+    + 如果在一个函数中存在for   else 结构，而且for中有return语句，return语句执行后，else语句的内容也不执行
 
 ## 5.特殊符号
 + \n 换行
 + \r 换行
 + \r\n 回车换行
-+ r R 加到字符串前面表示不转义
++ r R \ 加到字符串前面表示不转义
 + \t 四个空格
 + \  在转义前面再加一个反斜杠表示不转义
 + 在字符串最后加上\ 表示不换行
 + f 表示字符串前缀，例如f'{a}, {6}' = '100, 200'
 
 ## 6.python语言的特点
-+ python是动态的强类型语言，动态语言的特点是不需要事先声明变量，
-  可以在使用的同时被声明，使用方便，但是也存在无法判断变量类型问题，强类型语言的特点是只有相同类型变量之间才可以操作  ，例如：python不能运算‘abc’+1, 但是在python中也存在隐式的类型转换，例如：1+0.5=1.5
++ python是动态的强类型语言，动态语言的特点是不需要事先定义变量类型，
+  可以在使用的同时被定义，赋值即定义，使用方便，但是也存在无法判断变量类型问题，遇到问题难以发现，在使用函数时也不知道该传什么类型的参数（但是可以通过类型注释来改善），bur强类型语言的特点是只有相同类型变量之间才可以操作  ，例如：python不能运算‘abc’+1, 但是在python中也存在隐式的类型转换，例如：1+0.5=1.5
 
   
 
 ## 7.数值类型
 
 + int 为长整型，无大小限制，但是受内存限制
+
 + bool 可以和整型直接运算
+
 + int 截取整数部分
-+ // floored quotient 向下取整
-+ math.floor() 向下 math.ceil()向上 round 4舍6入 5取偶
+
++ // floored quotient 向下取整  （5颗星）
+
++ math.floor() 向下  math.ceil()向上   round 4舍6入 5取偶(不是math中的，是内建函数)
+
 + math.pi math.e math.sqrt()=2 ** 0.5 pow(2,3) math.pow(2,3) math.log2(4) math.log10(100)=2
-+ min(range(5))=0 min([9,0])=0 min(3, 4, 5)=3 max用法相同
-+ a = 2 , b = hex(100) 不能这么用
+
++ min(range(5))=0 min([9,0])=0 min(3, 4, 5)=3 max用法相同, 时间复杂度为O（n）
+
+  ```python
+  # min(range()) TypeError
+  # min([]) ValueError
+  min([], default=0)
+  ```
+
+  
+
++ a = 2 , b = hex(100) 不能这么用，尽量不要写在一行
+
 + bin(100) = 0110 0100  hex(100) = 64 oct(100)=0o144
-+ type(12)返回类型 isinstance('abc', (str, int, float))返回布尔
+
+  ```python
+  int(0o10) # 8
+  int(0xf)  # 15
+  int(0b10) # 2
+  
+  bin(2)  # 0b10
+  bin(0xf) # 0b1111
+  bin(0o10) # 0b1000
+  
+  hex(15) # 0xf
+  hex(0xf) # 0xf
+  hex(0o10) # ox8
+  
+  oct(8) # 0o10
+  oct(0xf) #0o17
+  oct(0b10) #0o2
+  ```
+
+  
+
++ type(12)返回类型  
+
++ isinstance('abc', (str, int, float))返回布尔
 
 ## 8. 容器
 
 ### (1). 列表
 
-+ list 索引0-len(a)-1  -len到-1，构建list=[1,2] list=list(range(5)) list=list()
++ list 索引0-len(a)-1  -len到-1，构建list=[1,2] list=list(range(5)) list=list(可迭代对象)
 
   ​	list 方法：
 
@@ -212,32 +260,40 @@
 
   ​	alst.append() O(1)
 
-  ​	alst.index(object, 开始索引，结束索引)  O(n) 两个索引范围前包后不包
+  ​	alst.extend([1,2]) O(1)
 
-  ​	alst.count() O(n)
+``` python
+#alst.append() alst.extend() 都是原地修改 相extend()当于
+alst = []
+alst += [1]
+```
+
+  ​	alst.index(object, 开始索引，结束索引)  O(n) 两个索引范围前包后不包，列表只能通过索引查找
+
+​       没有  find方法
+
+  ​	alst.count()  O(n)
 
   ​	alst.insert(索引，object)  在索引前面插入，超出索引插在最前面或最后面 O(n)
 
-  ​	alst.extend([1,2]) O(1)
-
-  ​	alst + blst 生成心列表，开劈新空间   **注意**
+  ​	alst + blst 生成新列表，开劈新空间   **注意**
 
   ​	alst*5 对当前列表里面的元素操作，例如：[[2,3]乘5]=[[2,3,2,3,2,3,2,3]]生成新列表，开辟新空间，**注意**
 
-  ​	alst.sort(*, key=None, reverse=False) 可选参数和必须写的关键字参数，没生成新的，原地排序，sort有时必须要用，但是少用。例子：
+  ​	alst.sort(*, key=None, reverse=False) 只能接受2个keyword_only参数，没生成新的列表，原地排序，sort有时必须要用，但是少用。例子：
 
   ```python 
   alst=[1,2,'a']
   #在排序的过程中会转换成字符串，但不改变原来的结果
   alst.sort(key=str)
-  #不可以用????
+  #不可以用?，因为int('a', 16)
   alst.sort(key=int)
   
   ```
 
   alst.remove(object) 找不到会报错，会删除第一个找到的object，因为需要先找到再删除，而且需要挪位置，所以效率很低, O(n)
 
-  alst.pop()
+  alst.pop() 删除指定索引，只有一个参数
 
   alst.clear()  引用计数标记为0
 
@@ -249,7 +305,7 @@
   a[1] = 31
   a = [1,31,3,1,2,3]
   
-  # 相乘后a两个位置的元素具有相同地址
+  # 相乘后a两个位置的元素具有相同地址（5颗星）
   a = [[1,2,3]]*2
   a = [[1,2,3], [1,2,3]]
   a[1][2] = 31
@@ -260,7 +316,7 @@
   a[1][2] = 31
   a = [[1,2,3], [1,2,31]]
   
-  #a与b的值相等即 a==b,但是地址不同 copy之后id(a) != id(b), id(a[1])=id(b[1])
+  #a与b的值相等即 a==b,但是地址不同 ，shallow_copy之后id(a) != id(b), id(a[1])=id(b[1])
   a = [[1,2,3], [1,2,3]]
   b = a.copy()
   a[1][2] = 31
@@ -281,15 +337,15 @@
 
   
 
-  
+  ![]()
 
   in  O(n)不要经常用
 
   als.reverse() 通过对调实现的，一般不用，只需要倒着打印即可
 
-   
+  倒着打印字符串： ''.join((i for i in reversed('abc')))
 
-  ​	在jupyter notebook里面无out无返回值
+   
 
 + 链表Linkedlist
 
@@ -303,9 +359,9 @@
 
 ### (2). 元组
 
-  新建元组，() (1,) (1,2)   tuple()
+  新建元组，() (1,) (1,2)   tuple()  1,2
 
-  ​	元组不可以修改：是指里面的值和地址不能修改
+  ​	元组不可以修改：是指里面的值和地址不能修改，但是如果地址指向的是可变对象，那么这个可变对象可以修改。
 
   ​	修改元组
 
@@ -314,10 +370,10 @@
   tup[0] = 31 #不可以修改
   tup[1][1] = 31 #不可以修改
   tup[2][1] = 31 #可以修改
-  tup[2][3] = 31 #可以修改
+  tup[2][3] = 31 #可以修改  （5颗星）
   tup[2][3][0] = #不可以修改
   
-  tup = (1,)*3
+  tup = (1,)*3  #（5颗星）
   tup = (1, 1, 1)
   
   tup = ((1,),)*3
@@ -348,9 +404,11 @@
 
 + 字符串格式化
 
-  '{:星号>9.3%}'.format(1.732)  转换成百分数，并且小数点后面留3位，一共9位右对齐，其余用星号填充*
+  '{:星号>9.3%}'.format(1.732)  转换成百分数，并且**一共9位右对齐, 小数点后面留3位**，其余用星号填充\*
 
-  '{:星号>9.3}'.format(1.732) 字符串一共占用9位，数字部分一共占3位。
+  '{:星号>9.3}'.format(1.732) **字符串一共占用9位，数字部分一共占3位。**
+
+  '{:.2f}'.format(1.732) 小数点后保留2位
 
   ‘{:*>6.2f}'.format(1.732)
 
@@ -358,7 +416,7 @@
 
   '{:2}'.format(1.732)  #宽度为2但是不起作用
 
-   '{:f}'.format(3**0.5)
+   '{:f}'.format(3**0.5)  #默认小数点后面保留6位
 
   octets = [192, 168, 0, 1] 四个位置分别对应四个数，16进制各占5位2位2位
   '{:5x}{:2X}{:02X}{:02X}'.format(*octets) 
@@ -563,7 +621,7 @@
 
   
 
-### (7). 线性结构总结
+### (7). 线性结构切片
 
 + x[1:-1] 去头去尾
 
@@ -755,6 +813,10 @@ a = [(i, j)  for i  in range(3)  for j in 'abc']
 
 列表表达式一次生成全部对象，返回新的列表，生成器是返回生成器对象，这是个惰性对象，驱动一次返回一个元素，列表表达式因为一次性生成全部元素，所以从单次返回值来看，很占内存空间，生成器表达式更节约空间，如果生成器里面没有元素几乎不占内存空间，从总的空间来看，列表表达式与生成器表达式所占用的空间相近。生成器表达式的计算时间短，列表解析式时间长。
 
+### 11.5 生成器函数
+
+
+
 
 
 ## 9.常用的模块
@@ -932,7 +994,15 @@ a = [(i, j)  for i  in range(3)  for j in 'abc']
 
 + print（add）只打印表示标识符，标识符指向函数，并且打印出地址。
 
++ 函数执行流程：
+
+  ![](/Users/jw/Projects/python23/magedu/函数执行流程.png)
   
++ 执行流程栈解释：
+
+  ![](/Users/jw/Projects/python23/magedu/栈_函数执行流程.png)
+
+
 
 ### (3). 函数解构：
 
@@ -1022,13 +1092,24 @@ add(*range(6)) #z是一个元组（2，3，4，5）
   
     尽量不要使用，global, 如果函数需要参数可以通过形参的方式传递，通过实参赋值，但是如果使用了global，函数里面的参数就会到外面找值，同时，也可以在函数里面修改，这样就不清楚变量最终被改成什么样子，会照成全局变量污染。
     
++ nonlocal语句：
+
+    在内部函数使用 nonlocal（非全局，只能在函数中的内部函数使用），即使在内部
+    使用了c+=1,也可以在外面找到c
+
 + global与nonlocal语句的比较：
 
     这两条语句一般用在，内部作用域想要修改外部作用域的变量时使用，但是一般不用global，因为可能会引起全局变量的污染，在局部作用域中对变量使用global，则在此局部作用域中该变量不会被定义，在上级的某一局部作用域中也不会被定义，而是在全局作用域中被定义，如果在局部作用域中变量前面加上nonlocal,    则此变量不会在该局部作用域中被定义，也不会在全局作用域中被定义，而是在上级的某一局部作用域中被定义。
 
++ 变量名解析原则：
+
+  总结：外层变量对内层可见，内层变量对外层不可见，就近原则
+
+  ![](/Users/jw/Projects/python23/magedu/变量名解析原则.png)
+
 + 默认值的作用域
 
-    函数中的型参的作用域都是局部作用域，python中的函数都有默认值，默认值都放在函数对象的属性中，例如：foo.—name—   foo.—defaults—(一般放简单参数)        foo.— kwdefaults— （一般放可变和keyword_only参数）
+    函数中的型参的作用域都是局部作用域，python中的函数都有默认值，默认值都放在函数对象的属性中，例如：foo.\_\_name\_\_   foo.\_\_defaults\_\_(一般放简单参数)        foo.\_\_kwdefaults\_\_ （一般放可变和keyword_only参数）
 
     ```python
     def a(x=[]):
@@ -1066,8 +1147,87 @@ add(*range(6)) #z是一个元组（2，3，4，5）
       # ([],), [1], [1, 1], ([1, 1],)
     ```
 
+    ```python
+def foo(x=[], *, b=2):
+        print('x_id:' ,id(x), 'b_id:', id(b))
+    x += [1]   
+        return x
+    print('foo_id:', id(foo), 'defaults_id:', foo.__defaults__, id(foo.__defaults__), 'kwdefaultid:', foo.__kwdefaults__, id(foo.__kwdefaults__))
+    foo()
+    print('foo_id:', id(foo), 'defaults_id:', foo.__defaults__, id(foo.__defaults__), 'kwdefaultid:', foo.__kwdefaults__, id(foo.__kwdefaults__))
+    foo() #第二次调用x的地址没有变
+    print('foo_id:', id(foo), 'defaults_id:', foo.__defaults__, id(foo.__defaults__), 'kwdefaultid:', foo.__kwdefaults__, id(foo.__kwdefaults__))
+    foo(x=[]) #第三次调用x的地址变了
+    print('foo_id:', id(foo), 'defaults_id:', foo.__defaults__, id(foo.__defaults__), 'kwdefaultid:', foo.__kwdefaults__, id(foo.__kwdefaults__))
     
-
+    # 输出（3次调用函数的地址没有变，只有第3次调用时x_id变了）
+    
+    foo_id: 4584989560 defaults_id: ([],) 4585050352 kwdefaultid: {'b': 2} 4585835328
+    x_id: 4584614472 b_id: 4544013776
+    foo_id: 4584989560 defaults_id: ([1],) 4585050352 kwdefaultid: {'b': 2} 4585835328
+    x_id: 4584614472 b_id: 4544013776
+    foo_id: 4584989560 defaults_id: ([1, 1],) 4585050352 kwdefaultid: {'b': 2} 4585835328
+    x_id: 4585946632 b_id: 4544013776
+    foo_id: 4584989560 defaults_id: ([1, 1],) 4585050352 kwdefaultid: {'b': 2} 4585835328
+    ```
+    
+    ```python
+    # 简单参数例子：
+    def foo(xyz, m=123, n='abc'):
+        print('xyz_id:', id(xyz))
+        m = 456
+        n = 'def'
+    print(foo.__defaults__)
+    foo('python')
+    print(foo.__defaults__)
+    foo('py')
+    print(foo.__defaults__)
+    
+    # 输出
+    # xyz_id 变了，defaults没变
+    (123, 'abc')
+    xyz_id: 4546904840
+    (123, 'abc')
+    xyz_id: 4545577512
+    (123, 'abc')
+    
+    ```
+    
+    ```python
+    # 引用参数的另一个例子：
+    def foo(xyz, m=123, *, n='abc', t=[1,2]):
+        print('xyz_id:', id(xyz))
+        t.append(3)
+        m = 456
+        n = 'def'
+    print(foo.__defaults__, foo.__kwdefaults__)
+    foo('python')
+    print(foo.__defaults__, foo.__kwdefaults__)
+    foo('py')
+    print(foo.__defaults__, foo.__kwdefaults__)
+    
+    # 输出
+    # kwdefaults参数被存在字典中，改变了 
+    
+    (123,) {'n': 'abc', 't': [1, 2]}
+    xyz_id: 4546904840
+    (123,) {'n': 'abc', 't': [1, 2, 3]}
+    xyz_id: 4545577512
+    (123,) {'n': 'abc', 't': [1, 2, 3, 3]}
+    ```
+    
++ 函数销毁：
+  
+  ```python
+  del  函数名
+  ```
+  
+    
+  
+    
+  
+    
+  
 ###  (5). 闭包(5星)
 
  + 自由变量：为定义在本地作用域中的变量。定义在本层函数外，其他函数内的变量
@@ -1205,16 +1365,524 @@ def add(x, y):
   print(x + y)
 ```
 
+###  (7). lambda表达式
+
++ lambda表达式记匿名函数，格式： lambda[参数列表] ：表达式
+
++ 参数列表中参数的个数>=0,  参数可以是形参的任意一种， 后面的冒号必须写，表达式相当于函数返回值，不能出现赋值语句=，表达式可以返回生成器，列表，集合，字典，迭代器，也可以再包含一个lambda表达式。
+
+  python中的lambda表达式只能有一行，称为单行函数
+
+  例如：
+
+  ``` python
+  def fn():
+    return 0
+  # 等价于
+  lambda : 0  # 省略了函数名字，和return，更简洁
+  
+  # 返回0的函数在字典中的应用1
+  from collections import defaultdict
+  dict1 = defaultdict(lambda : 0)
+  for i in 'abc':
+      for j in range(4):
+          dict1[i]+= 1 # KeyError  dict1[i] = (lambda : 0)()
+  print(dict1)
+  
+  # 返回0的函数在字典中的应用1
+  from collections import defaultdict
+  dict1 = defaultdict(int)
+  for i in 'abc':
+      for j in range(4):
+          dict1[i]+= 1
+  print(dict1)
+  ```
+
+
+
++ 用途：一般用在高阶函数传参时
+
+  例如：
+
+  ```python
+  sorted([1, 2, 3, 'a'], key=str)
+  # 等价于
+  sorted([1, 2, 3, 'a'], key=lambda x: str(x))
+  ```
+
+  ```python
+  # 普通传参
+  lambda x, y=1: x+y  # 等价于fn，返回函数对象
+  (lambda x, y=1: x+y)(2) # 等价于fn(2)  2
+  
+  
+  # keyword_only参数
+  (lambda x, *, y: x + y)(1, y=2)
+  (lambda x, *, y: x + y)(x=1, y=2)
+  
+  (lambda x, *, y=2: x + y)(1)
+  (lambda x, *, y=2: x + y)(x=1)
+  (lambda x, *, y=2: x + y)(1, y=2)
+  (lambda x, *, y=2: x + y)(x=1, y=2)
+  
+  
+  # 可变位置参数，表达式可以返回迭代器，列表，集合，元组等
+  # 思考如果参数传入range会返回什么？
+  (lambda *args: (x for x in args))(*range(5))
+  (lambda *args: [x for x in args])(*range(5))
+  (lambda *args: {x%2 for x in args})(*range(5))
+  (lambda *args: [(x,x) for x in args])(*range(5))
+  
+  
+  # 可变关键字参数, 注意结构的星号
+  (lambda *kwargs: {i:0 for i in kwargs})(*{'a':1, 'b':2})
+  (lambda *kwargs: {i:0 for i in kwargs})(*dict(a=1, b=2))
+  
+  
+  # 列表生成式与lambda表达式混合使用,lambda表达式里面还有
+  # 一个lambda,并使用map高阶函数
+  [i for i in (lambda *args: map(lambda x: x+1, args))(*range(3))]
+  [i for i in (lambda *args: map(lambda x: (x+1, args), args))(*range(3))]
+  # [(1, (0, 1, 2)), (2, (0, 1, 2)), (3, (0, 1, 2))]
+  ```
+
+  
+
+### (8). 递归
+
++ 递归是指函数直接或者间接的调用自身（在同一个函数内部，或者多个函数之间相互调用），递归一定要有边界条件，当边界条件满足时递归返回，当边界条件不满足时，递归前进。递归的深度不宜太深，python中对递归的调用深度做了限制，以保护解释器（不要超过1000）。在写代码的过程中，要避免函数间接调用导致的循环递归。递归的效率相对较低，因为每一次调用都要开辟新的栈桢，所以即使递归很简洁，能不用就不用。
+
++ 大部分递归都可以通过循环实现
+
+  例子：
+
+  ```python
+  # 斐波那切数列
+  # 循环实现
+  a = 0
+  b =1
+  ```
+
+  
+
+
+
+### (9). 高阶函数
+
+高阶函数：如果一个函数的参数或者返回值中有函数
+则这个函数是高阶函数
+
+例如：
+
+```python
+# 是高阶函数，counter()返回值指向内层函数
+# 如果返回inc(),也是高阶函数
+def counter(base):
+    def inc(step=1):
+        nonlocal base
+        base += step # 在内层又重新定义了base,里面的base已经看不到外面的base了，两个base不是同一个
+        return base
+    return inc
+  
+fn = counter(2)
+fn() # 3  # 如果inc(), 后面加括号，则counter直接返回3
+
+
+# f1和f2是函数调用的结果，无法比较大小
+# 所以 = 用来判断地址是否相等，每次函数
+# 调用都创建新的栈桢，所以地址不同，但是
+# 标识符 counter 的地址没有变。
+f1 = counter(5)
+f2 = counter(5)
+f1 = f2 f1 is f2  #(False, False)
+
+```
+
+
+
+#### (1). sorted()
+
+插入排序实现sorted()高阶函数，不可以用while循环的原因，思考？
+
+思考？ ['12', '1', '3', '0']如何排序
+
+```python
+def sorted(iterable, *, key=None, reverse=False):
+    new_list = []
+    for value in iterable:
+        cvalue = key(value) if key else value
+        for j, value1 in enumerate(new_list):
+            cvalue1 = key(value1) if key else value1
+            flag = cvalue < cvalue1 if not reverse else cvalue > cvalue1
+            if flag:
+                new_list.insert(j, value)
+                break
+        else:
+            #new_list.insert(i, value)
+            new_list.append(value)
+    return new_list
+ 
+
+nums = ['a', 9, 0, 8, 6, 2, 2, 2, 1, 7]
+sorted(nums, key=str, reverse=True)
+```
+
+#### (2). filter()
+
+filter(function, iterable)
+function是**一个参数**的函数，且返回值应当是bool或者等效布尔值
+function参数如果是None, 可迭代对象的每一个元素自身等效bool
+
+```python
+# function 不是None, 则返回表达式对应True的可迭代元素
+# function 过滤掉部分元素，但是最终表达式返回True，元素才可以返回
+list(filter(lambda x: x%3==0, range(10)))
+# [0, 3, 6, 9]
+
+list(filter(lambda x: x%3, range(10)))
+# [1, 2, 4, 5, 7, 8]
+
+# 将等效于None的元素过滤掉
+list(filter(None, range(5)))
+# [1, 2, 3, 4]
+
+list(filter(None, range(-5, 5)))
+# [-5, -4, -3, -2, -1, 1, 2, 3, 4]
+```
+
+#### (3). map()
+
+可以代替zip()
+
+map(function, *iterables)
+
+```python
+dict(map(lambda x: (x%5, x), range(500)))
+# {0: 495, 1: 496, 2: 497, 3: 498, 4: 499}
+
+dict(map(lambda x,y: (x, y), 'abc', range(3)))
+{'a': 0, 'b': 1, 'c': 2}
+
+dict(map(lambda x:x, zip('abc', range(3))))
+```
+### (10). 生成器函数
+
+生成器表达式：(i for i in range(3))
+
+生成器函数：在函数中出现yield关键字
+
+生成器函数的执行过程 ：
+
+```python
+
+# 被驱动一次，遇到一个yield时函数暂停，yield返回一个值，被驱动第二次
+# 遇到第二个yield函数暂停，返回第2个值，第三次驱动遇到return，函数返回
+# 因为没有yield了，所以驱动时会报错，但可以添加缺省值避免包报错，next(g, None),next()
+# 是一个函数，不是g的属性
+
+def gen():
+    print(1)
+    yield 2
+    print(3)
+    yield 4
+    print(5)
+    return 6
+  
+g = gen() # 直接调用函数是个生成器，没有打印和输出，函数体不会立即执行
+next(g) # 驱动一次打印1，返回2，停在第3行
+
+next(g) # 驱动第二次打印3，返回4，停在第5行
+
+next(g) # 驱动第二次打印5，报错，在错误中可以看的返回的6
+
+next(g, 6)# 打印5，返回缺省值6
+
+# 没有显式的return
+def gen():
+    print(1)
+    yield 2
+    print(3)
+    yield 4
+    print(5)
+    
+g = gen()
+next(g)
+next(g)
+next(g) # 打印5，报错，错误中返回一个看不到的None
+next(g, None) # 打印5，不会报错，返回一个看不到的None
+```
+
+无限次循环例子：
+
+```python
+# 无限循环, 每一次循环遇到yield会暂停
+def counter():
+    i = 0
+    while True:
+        i += 1
+        yield i
+c = counter()
+next(c) # 返回1，停在yield
+next(c) # 返回2，停在yield
+```
+
+计数器例子：
+
+```python
+# 计数器
+def inc():
+    def counter():
+        i = 0
+        while True:
+            i += 1
+            yield i
+    c = counter()
+    def fn():    # return lambda : next(c)  后3行可以用lambda表达式代替
+        return next(c) 
+    return fn 
+g = inc()
+```
+
+计数器改进例子：
+
+思考c.send(0)
+
+```python
+def inc():
+    def counter():
+        i = 1
+        while True:
+            i += 1            
+            reponse = yield i
+            if reponse is not None:
+                i = reponse
+            
+#         def a():
+#             nonlocal reponse            
+    c = counter()        
+    return lambda reset=False: next(c) if not reset else c.send(0)
+g = inc()
+g()
+g()
+g(True) # 需要调用几次g(),等待生成器启动，才可以使用重置功能
+```
+
+
+
+生成器实现斐波那契数列：
+
+```python
+# 斐波那契数列，生成器实现
+def fib():
+    a1 = 0
+    a2 = 1
+    while True:
+        a1, a2 = a2, a1+a2
+        yield a1
+g = fib()
+count = 1
+for i in g:    
+    if count == 101:
+        print(i)
+        break
+    count += 1
+       
+```
+
+生成器函数与生成器表达式：
+
+```python
+# 前3个例子为函数
+# 调用函数，使用g()
+g = lambda : (i for i in range(5))
+
+def foo():
+    yield from range(5)   # from后面加可迭代对象
+        
+# 生成器函数与生成器表达式比较，可以写出复杂的功能
+def foo():
+    for i in range(5):
+        yield i
+        
+# 第4个例子为generator       
+m = (i for i in range(5))
+```
+
+### (11). 装饰器
+
+装饰器：无参装饰器、有参装饰器
+无参装饰器：是一个函数，无参实际上是只有一个函数作为参数，
+而且装饰器返回一个函数。
+
+```python
+# 给函数增加统计时间的功能
+import datetime
+def add(a, b):
+    return a + b
+
+def logger(fn, *args, **kwargs): # 同时传入另一个函数的参数和变量
+    start = datetime.datetime.now()
+    x = fn(*args, **kwargs)
+    
+    delta = (datetime.datetime.now()-start).total_seconds()
+    print(delta)
+    return x
+    
+logger(add, 1, 2) # 三种调用方式等价
+logger(add, 1, b=2)
+logger(add, a=1, b=2)
+
+
+
+# 第一次修改，在logger中先传入add, 再传入2个参数(柯里化)
+import datetime
+
+def add(a, b):
+    return a + b
+
+def logger(fn):
+    def wrapper(*args, **kwargs):     
+        start = datetime.datetime.now()
+        x = fn(*args, **kwargs)
+        delta = (datetime.datetime.now()-start).total_seconds()
+        print(delta)
+        return x
+    return wrapper
+logger(add)(1, 2) 
+
+
+# 进一步修改成装饰器（背）
+import datetime
+
+def logger(fn):
+    def wrapper(*args, **kwargs):     
+        start = datetime.datetime.now()
+        x = fn(*args, **kwargs)
+        delta = (datetime.datetime.now()-start).total_seconds()
+        print(delta)
+        return x
+    return wrapper
+
+@logger # add = logger(add)
+def add(a, b):
+    return a + b
+
+# logger(add)(1, 2) 相当于在add上面加一个装饰器 
+add(1, 2)
 
 
 
 
-在内部函数使用 nonlocal（非全局，只能在函数中的内部函数使用），即使在内部
-使用了c+=1,也可以在外面找到c
+# 在上面装饰器的基础上增加修改函数fun.__name__ 、fun.__dic__的功能
+def update_add():
+    wrapper.__name__ = fn.__name__
+    wrapper.__doc__ = fn.__doc__
+
+def logger(fn):
+    def wrapper(*args, **kwargs):
+        'wrapper doc'
+#         wrapper.__name__ = fn.__name__ # 写到里面只有函数执行时才会被修改
+#         wrapper.__doc__ = fn.__doc__   
+        return fn(*args, **kwargs)
+    wrapper.__name__ = fn.__name__  # 写到外面在函数定义时就可以被修改
+    wrapper.__doc__ = fn.__doc__
+    
+    #update_add(fn, wrapper)
+    return wrapper
+
+@logger # add = logger(add)
+def add(a, b):
+    'add doc'
+    return a + b    
+# 调用add, 先执行装饰器，在返回来的add基础上再接着执行
+# 调用logger(add),返回内层的wrapper函数，该函数用到
+# 外层函数的fn变量，形成闭包，所以但调用到内层函数时fn,
+# fn不会消亡
+# 当调用add时，add已经指向wrapper函数对象了，所以，当
+# 获取name和dict属性时，得到的是wrapper属性
+add(1, 2)
+
+
+# 第一次修改将更新操作提取成一个函数
+def update_add(wrapper, fn):
+    wrapper.__name__ = fn.__name__
+    wrapper.__doc__ = fn.__doc__
+    
+def logger(fn):
+    def wrapper(*args, **kwargs):
+        return fn(*args, **kwargs)
+   
+    update_add(wrapper, fn)
+    return wrapper
+    
+@logger # add = logger(add)
+def add(a, b):
+    return a + b
+#add(1, 2)
+add.__name__
+
+# 第二次修改，柯里化实现修改属性的功能
+def update_properties(src):
+    def _copy(dest):
+        dest.__name__ = src.__name__
+        dest.__doc__ = src.__doc__
+        return dest # 装饰器的内层函数需要有返回值
+    return _copy    
+  
+def logger(fn):
+    @update_properties(fn)  #wrapper = update_properties(wrapper, fn)
+    def wrapper(*args, **kwargs):
+        return fn(*args, **kwargs) # 装饰器的内层函数需要有返回值   
+    return wrapper
+  
+@logger # add = logger(add)
+def add(a, b):
+    return a + b
+
+
+#add(1, 2)
+add.__name__
+
+```
+
+## 12. 正则表达式
+
+正则表达式(Regular Expresion): regex,regexp,RE
+
++ 基本正则表达式：(BRE), grep、sed、vi等软件支持。vim有扩展
+
++ 扩展正则表达式：(ERE) egrep(grep-E)、sed-r等
+
++  PCRE:几乎所有高级语言都是PCRE的方言或者变种
+
++ 正则表达式中的元字符(metacharat er):
+
+  ![](/Users/jw/Projects/python23/magedu/re元字符.png)
+
+\w : 可以匹配字母，数字，下划线，中文
 
 
 
++ 控制匹配次数的字符：
 
+  ![](/Users/jw/Projects/python23/magedu/re匹配数量.png)
+
++ 捕获(分组匹配)：
+
+  ![](/Users/jw/Projects/python23/magedu/re捕获分组匹配.png)
+
++ 贪婪匹配：
+
+  ![](/Users/jw/Projects/python23/magedu/re贪婪匹配.png)
+
++ 匹配反义字符
+
+  
+
+转义字符：正则表达式中有特殊意义的字符用\转义，例如：
+\\ 表示反斜杠  \r \n \r\n表示换行
+或： x|y
+    
 
 # 五、知识点杂记
 
@@ -1242,6 +1910,7 @@ def add(x, y):
    + _dh   可以到处切换历史
    + ！touch test.txt表示当前操作系统中的命令
    + %%timeit  语句块的时间，%timeit primenum()函数执行时间
+   + 在jupyter notebook里面无out无返回值
 + 程序放在内存中分为几个进程
 + 几个核就是几个cup
 + 充分利用内存可以优化程序
@@ -1273,5 +1942,168 @@ def add(x, y):
 + 标识符与变量？
 + c =3 >5 返回false，先计算右侧再进行左侧赋值
 
+# 八、文件操作
 
+文件操作：IO操作一般指文件IO，如果是网络IO就会直接说网络IO。
+磁盘：目前仍是文件持久化最重要的设备
+磁盘结构示意图：
+
+![](/Users/jw/Projects/python23/magedu/磁盘结构示意图.png)
+
+等弧长分区示意图：
+
+![](/Users/jw/Projects/python23/magedu/磁盘等弧长分区.png)
+
++ 打开文件
+
+  + 一般写文档时只使用'\n', 读文档时使用默认的None模式读取
+  
+
+open函数常用的参数：file mode encoding
+
+open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+  文件的访问模式分为：文本模式和二进制模式
+
+  + mode
+
+     r: 只读模式，不可以写入文件，如果文件不存在FileNotFoundError，rb rt(默认) rb+ rt+ r+
+
+    w: 只写模式，不可以读文件，如果文件存在会**清空**原来的内容，从头开始写入，不存在会创建文件，wb wt wb+ wt+ w+
+
+    x: 只写模式，文件存在会FileExitsError,  文件不存在会新创建一个文件，xb xt xb+ xt+ x+
+
+    a: 只写模式，文件存在打开追加内容，文件不存在创建文件，写入内容，ab at ab+ at+ a+
+
+    r: **只读**，wxa: **只写**,并且会产生新文件    
+
+  + encoding:打开或者创建文件时都需要指定编码，因为可能会在不同的操作系统上使用文件，Windows中使用codepage代码页,可以认为每一个代码页就是一张编码表，cp936等同于GBK，这也是Windows中默认的编码，linux中默认的编码是utf-8。
+
+  + errors: 如果值为NONE或strict，有编码错误会抛出ValueError, 如果值为ignore表示忽略编码错
+
+  + newline: 一般文本模式会使用，只可以填5种None,  "",  '\r',  '\n',  '\r\n'
+
+    写时：
+
+    + None模式下，'\n'会被替换成系统的缺省行分隔符，例如：windows系统为'\r\n', mac系统'\r',linux系统'\n'
+
+    +  ""空串模式下常见的换行符都会换行
+
+    +  其他3种换行符，按照指定换行符换行
+    
+    
+
+  读时：
+
+  + None模式下，是在5种模式下唯一发生转换的模式'\r','\n','\r\n'都会被转换成'\n', 即'\n','\n','\n\n'
+    
+    +  ""空串模式下常见的换行符都认为是换行
+  + 其他3种换行符，按照指定换行符换行
+
+
+  + closefd:默认为True，表示关闭文件时会关闭文件描述符。
+
+    例子：
+
+```python
+with open('test', 'w', newline=) as f:
+		f.write('python\rwww.python.org\nwww.magedu.com\r\npython3')
+# 在Windows下相当于写入
+'python\rwww.python.org\r\nwww.magedu.com\r\r\npython3'
+# 在mac下相当写入???
+'python\rwww.python.org\rwww.magedu.com\r\rpython3'
+
+newlines = [None, '', '\r', '\n', '\r\n']
+for nl in newlines:
+		f = open('test', newline=nl) # 分别替换不同换行符
+		print(f.readlines())
+		f.close()
+
+# ['python\n', 'www.python.org\n', 'www.magedu.com\n', 'python3'] None模式下\r被替换为\n ???
+# ['python\r', 'www.python.org\n', 'www.magedu.com\r\n', 'python3'] ''模式下会识别出来3中换行符，但是不会替换
+# ['python\r', 'www.python.org\nwww.magedu.com\r', '\npython3'] 遇到'\r'换行
+# ['python\rwww.python.org\n', 'www.magedu.com\r\n', 'python3'] 遇到'\n'换行
+# ['python\rwww.python.org\nwww.magedu.com\r\n', 'python3'] 遇到'\r\n'换行
+
+```
+
++ 文件读取方法总结
+
+  f.read(size=-1) # 从头开始读
+  f.readline(size=-1) # 一行一行读取，size可以设置读取行内几个字符或字节
+  f.readlines() # 读取所有行返回列表
+
+  大多数情况都用下面的方式读取文件内容
+
+  ```python
+  f = open('test') #  返回可迭代对象
+  for line in f:
+      print(line.encode().strip())
+  f.close()
+  ```
+
++ 写方法总结
+
+  f = open('test', 'w+')
+  f.writelines(['abc\n', '123']) #需要提供换行符
+
+  常用的写入文件的方法
+
+  ```python
+  f = open('test', 'w+')
+  f.write('\n'.join(['abc', '123']))
+  ```
+
+  
+
++ 关闭方法总结
+
+  f.close() # 文件关闭时自动调用一次flush()
+  为了避免因为异常而无法关闭文件，有两种处理方式
+  方式1:异常处理
+
+  ```python
+  try:
+      f = open('test', 'w')
+      f.read()
+  finally: # 无论try中是否报错都会执行finally 语句
+      f.close()
+  ```
+
+  方式2:上下文管理的方式
+  上下文管理的语句不会开启新的作用域
+  with语句块执行完会自动关闭文件对象
+
+  ```python
+  with open('test', 'w') as f:
+      f.write('abc')
+  f.closed
+  ```
+
++ 其他方法总结
+
+  f.seekable() f.readable() f.writable()
+  f.closed 查看文件是否关闭，返回一个布尔值，不能加括号，不可调用
+  如果文件已经关闭则 f.fileno()会报ValueError
+
+  cat test1 # 查看文件，如果文件中是字节b'abc'，则也可以查看出'abc'
+  f.read() # 如果文件中是字节b'abc', 则查看出b'abc'
+
++ 文本模式及二进制模式总结
+
+| 方法：                                                       | 文本模式  ：                                                 | 二进制模式 ：                                                | 指针位置：                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------- |
+| f.read(2)                                                    | 按字符读取                                                   | 按字节读取                                                   | 指针起始在0，读完指针指向第2个位置    |
+| f.write()                                                    | 按字符写入                                                   | 按字节写入                                                   | 从指针当前位置开始写，写完指针停在EOF |
+| f.tell()                                                     | -                                                            | -                                                            | 显示指针当前位置                      |
+| f.seek(偏移量[,whence=0,1,2])                                | 按字节偏移，3种模式分别是指针在开头，也是缺省值 ，offset只能接受正整数；                                  当前指针位置，offset只能接受0；                                                EOF offset只能接受0。 | 按字节偏移，3种模式是开头位置，也是缺省值                                                offset只能接受正整数；                                                当前指针位置，offset可正可负；                                                EOF offset可正可负。                                             二进制模式支持任意起点的偏移，从头，从尾，从中间开始，向后 seek可以超界，向前超界则会抛异常 |                                       |
+| open中的参数buffer                                 <br/>可以看作是是一个先进先出的队列（FIFO）文件，<br/>在缓冲区满了或者达到阈值时，数据会被flush到磁盘上<br/>flush()将缓冲区数据写入到磁盘、<br/>close()关闭前会自动第一次flush()<br/> | -1 缺省模式可通过io.DEFAULT_BUFFERSIZE  查看大小（一般都用缺省）缺省值的大小一般是4096或8192KB<br /><br/>>1使用缺省模式<br /><br />1 行缓冲遇到换行符才flush（用得少<br /> <br /> 0不支持 | -1 同文本模式<br/><br />>1比如buffer=10,那么超过10缓冲区hui被flush<br/><br />1不支持<br/><br />0关闭缓冲区（一般不用）br /><br /><br /> |                                       |
+| open中的参数mode为a时                                        | -                                                            | -                                                            | 指针会停在EOF                         |
+
+linux查看打开文件数量
+
+![](/Users/jw/Projects/python23/magedu/Linux查看open文件数量.png)
+
+  
+
+# 九、作业及练习
 
