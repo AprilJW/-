@@ -84,6 +84,30 @@ echo{a..z..2}
 
 cp /etc/redis.conf{,.bak} ./  #复制到根目录
 
+#### cp 文件
+
+cp afile ./    afile在当前文件夹，不能在当前文件夹下相同文件之间进行拷贝
+
+cp afile a/b/bfile  将afile中的内容拷贝到bfile中, bfile文件名字不改变，如果bfile不存在则新建一个bfile,并且将afile中内容拷过去
+
+cp afile a/b/  如果b下面存在与afile同名的文件，会将这个文件内容替换掉
+
+#### cp 目录
+
+cp a b -r 当b文件夹不存在时，会将a目录下的内容拷贝到b目录下, 当b存在时，会将a作为一个整体目录放到b目录下,并且替换b中的内容。
+
+cp a b -rf 当a中的有文件afile并且b中也有afile时，会提示时替代，加上-n则不会替代
+
+### mv
+
+mv afile dfile  不管dfile存在或者不存在，都会将a中的内容移动到dfile, 并且删除afile, 多级目录同样适用
+
+mv a b  不需要写递归的方式，直接移动，如果存在b,则将a目录的内容连带a一起放到b下面，先copy再删除，如果b不存在，则直接将a的名字改为b。
+
+mv afile.txt afile.txt 不能这么操作会提示samefile
+
+mv afile.txt afile  直接改名字
+
 ### cat
 
 cat *.txt  将txt文件连到一起
@@ -96,7 +120,7 @@ yum -y install tree  默认是yes
 
 ### tree
 
-tree / -L1 查看根目录下面的一层
+tree / -L 1 查看根目录下面的一层
 
 tree -d 只显示目录
 
@@ -110,15 +134,19 @@ mkdir -pv   如果没有父目录则新键一个父目录，并且显示详情
 
 ### tail
 
-tail -f redis.conf  将指针定位到文件的末尾，一般日志文件实用
+tail -f redis.conf  随着文件内容的增加输出后10行数据（-f = -follow），一般日志文件使用
 
-tail -n100 redis.conf 将指针定位到文件的第100行  
+tail -n100 redis.conf 输出文件后100行数据  
 
  ### ln
 
 ln -s 目录或文件1  目录或文件2    -s一定要写这样才能看清楚从谁到谁的链接
 
 建立连接时2一定要不存在，软连接建立完成时，使用stat查看状态时，stat -L, 如果原文件改变了，软连接则会跟进，如果不加-L，则原文件变了软连接状态不会跟进。
+
+###  pwd
+
+查看当前路径
 
 ## 基础知识
 
@@ -146,7 +174,7 @@ linux系统：hash-builtin-path   不会找当前路径，只会从path 中查�
 
 window系统：先搜素当前路径在搜素path路径，查看目录内容实用dir命令(隐藏与不隐藏都能查到)
 
-### 通配符
+### 通配符(wildcard)
 
 ls -d s*  以s开头的目录，后面可以是任意个包括0个字符
 
@@ -156,7 +184,13 @@ ls -d s?*  以s开头的目录，后面需要有2个以上字符
 
 ls -d s* [0-9]  以s开头的目录，以数字结尾，中间可以有任意个字符
 
-### 
+### 添加用户并设置密码
+
+useadd jw
+
+cat 123456 |grep passwd jw —stdin
+
+
 
 
 
