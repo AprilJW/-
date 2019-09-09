@@ -114,6 +114,12 @@ cat *.txt  将txt文件连到一起
 
 tac *.txt 将txt文件连到一起, 文件顺序不变，文件内容反转连接
 
+cat afile > bfile  bfile存在或者不存在，都会将afile中的内容重定向到bfile中
+
+cat afile >> bfile 追加
+
+
+
 ### yum
 
 yum -y install tree  默认是yes
@@ -190,7 +196,92 @@ useadd jw
 
 cat 123456 |grep passwd jw —stdin
 
+echo python | passwd python —stdin 直接保存密码了
 
+### 切换用户
+
+su -l root
+
+su -l python # 切换到跟目录
+
+### 安装python编译依赖环境
+
+```python
+yum -y install gcc make patch gdbm-devel openssl-devel sqlite-devel zlib-devel bzip2-devel
+```
+
+### 安装git
+
+```python
+yum install git -y
+```
+
+### 登陆python用户后安装pyenv
+
+```python
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+```
+
+### pip通用配置
+
+$ mkdir ~/.pip
+
+在~/.pip/pip.conf配置文件中填写：
+
+```python
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+
+[install]
+trusted-host = mirrors.aliyun.com
+```
+
+### 创建virtualenv虚拟环境
+
+真实目录放在~/.pyenv/versions下面，以后只要使用这个虚拟环境，
+
+包就会安装到对应的目录中而不是3.6.9。
+
+```python
+# 默认虚拟环境存放路径在
+#/home/python/.pyenv/versions/3.6.9/envs/virtual1/lib/py# thon3.6/site-packages (18.1)
+pyenv virtualenv 3.6.9 virtual1
+```
+
+### 在虚拟环境virtual1中安装需要的包
+
+```python
+# 进入到对应目录
+cd projects/web1
+
+# 激活虚拟环境,web文件夹下面可以没有virtual1，
+# 文件夹
+pyenv local virtual1
+
+# pip安装软件
+pip install ipython
+pip install jupyter
+
+# 切换到别的路径可以自动退出虚拟环境，只有进入
+# 到当前目录，才会开启当前的虚拟环境，不需要额外的命令
+```
+
+### 在虚拟环境virtual2中配置与virtual1相同的环境
+
+```python
+# 在虚拟环境virtual1中
+pip freeze > requirements
+
+mkdir -p ~/projects/web2
+cd ~/projects/web2
+# 建立虚拟环境
+pyenv virtualenv 3.6.9 virtual2
+pyenv local virtual2
+
+mv ../web1/requirments ./
+pip install -r requirements
+
+```
 
 
 
