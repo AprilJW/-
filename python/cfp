@@ -1,0 +1,10 @@
+[DEFAULT]
+a=test
+
+[sql]
+ip=123
+name=sql
+
+[sqld]
+ip=456
+name=sqld
